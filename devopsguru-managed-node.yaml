@@ -1,0 +1,27 @@
+# An example of ClusterConfig object using Managed Nodes
+---
+    apiVersion: eksctl.io/v1alpha5
+    kind: ClusterConfig
+
+    metadata:
+      name: devopsguru-eks-cluster
+      region: ap-southeast-2
+      version: "1.22"
+
+    availabilityZones: ["ap-southeast-2a","ap-southeast-2b","ap-southeast-2c"]
+    managedNodeGroups:
+      - name: managed-ng-private
+        privateNetworking: true
+        instanceType: t3.medium
+        minSize: 1
+        desiredCapacity: 1
+        maxSize: 6
+        availabilityZones: ["ap-southeast-2a","ap-southeast-2b","ap-southeast-2c"]
+        volumeSize: 20
+        labels: {role: worker}
+        tags:
+          nodegroup-role: worker
+    cloudWatch:
+      clusterLogging:
+        enableTypes:
+          - "api"
